@@ -1,11 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 from .views import ExperienciaViewSet, EducacionViewSet
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r'laboral', ExperienciaViewSet, basename='experiencia')
 router.register(r'educacion', EducacionViewSet, basename='educacion')
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls

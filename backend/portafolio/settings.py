@@ -167,6 +167,8 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
+    # Deshabilitar format_suffix_patterns para evitar conflicto de converters
+    'URL_FORMAT_OVERRIDE': None,
 }
 
 # JWT Settings
