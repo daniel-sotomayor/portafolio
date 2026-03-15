@@ -24,7 +24,9 @@ interface Perfil {
   telefono: string
   ubicacion: string
   foto_perfil: string
+  foto_perfil_url: string  // URL completa de la foto de perfil
   cv_pdf: string
+  cv_pdf_url: string  // URL completa del CV
   redes_sociales: {
     github?: string
     linkedin?: string
@@ -196,8 +198,10 @@ const About = () => {
               <button 
                 className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold transition-colors"
                 onClick={() => {
-                  if (perfil?.cv_pdf) {
-                    window.open(perfil.cv_pdf, '_blank')
+                  // Usar URL completa del CV si está disponible, sinon usar el valor antiguo
+                  const cvUrl = perfil?.cv_pdf_url || perfil?.cv_pdf
+                  if (cvUrl) {
+                    window.open(cvUrl, '_blank')
                   }
                 }}
               >
@@ -214,7 +218,7 @@ const About = () => {
             >
               <div className="aspect-square rounded-2xl overflow-hidden glass">
                 <img
-                  src={perfil?.foto_perfil || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"}
+                  src={perfil?.foto_perfil_url || perfil?.foto_perfil || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"}
                   alt="Profile"
                   className="w-full h-full object-cover"
                   onError={(e) => {

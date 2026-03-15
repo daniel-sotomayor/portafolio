@@ -22,6 +22,7 @@ interface Articulo {
   resumen: string
   contenido: string
   imagen: string
+  imagen_url: string  // URL completa de la imagen
   categoria: Categoria | null
   autor: number | null
   autor_nombre: string
@@ -137,7 +138,7 @@ const BlogDetail = () => {
           {/* Imagen */}
           <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden mb-8">
             <img
-              src={articulo.imagen}
+              src={articulo.imagen_url || articulo.imagen}
               alt={articulo.titulo}
               className="w-full h-full object-cover"
               onError={(e) => {

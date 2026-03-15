@@ -17,6 +17,12 @@ export default defineConfig({
           })
         },
       },
+      // Proxy para archivos media (imágenes cargadas desde admin)
+      '/media': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
     },
     // OWASP A6:2017 - Security Misconfiguration
     // Configurar headers de seguridad

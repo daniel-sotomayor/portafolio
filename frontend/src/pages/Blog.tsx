@@ -24,6 +24,7 @@ interface Articulo {
   slug: string
   resumen: string
   imagen: string
+  imagen_url: string  // URL completa de la imagen
   categoria: Categoria | null
   autor_nombre: string
   etiquetas: string[]
@@ -186,7 +187,7 @@ const Blog = () => {
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={post.imagen}
+                    src={post.imagen_url || post.imagen}
                     alt={post.titulo}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={(e) => {

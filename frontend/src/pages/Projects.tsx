@@ -22,6 +22,7 @@ interface Proyecto {
   descripcion_corta: string
   descripcion_larga: string
   imagen: string
+  imagen_url: string  // URL completa de la imagen
   categorias: Categoria[]
   tecnologias: string[]
   caracteristicas: string[]
@@ -190,7 +191,7 @@ const Projects = () => {
                 {/* Image */}
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={project.imagen}
+                    src={project.imagen_url || project.imagen}
                     alt={project.titulo}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={(e) => {
@@ -309,7 +310,7 @@ const Projects = () => {
               {/* Imagen */}
               <div className="relative h-64 md:h-96">
                 <img
-                  src={selectedProject.imagen}
+                  src={selectedProject.imagen_url || selectedProject.imagen}
                   alt={selectedProject.titulo}
                   className="w-full h-full object-cover"
                   onError={(e) => {

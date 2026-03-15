@@ -50,5 +50,6 @@ urlpatterns = [
     # Ejecuta: cd docs && npm install && npm run dev
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Servir archivos media en desarrollo y producción
+# En producción se debe configurar nginx/AWS S3 para servir estos archivos
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
