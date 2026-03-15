@@ -5,6 +5,7 @@
 
 ---
 
+
 ## 📋 Resumen de Seguridad
 
 Este documento describe las validaciones y medidas de seguridad implementadas en el proyecto Portafolio Profesional, alineadas con las recomendaciones OWASP Top 10.
