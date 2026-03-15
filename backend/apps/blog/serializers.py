@@ -15,16 +15,9 @@ from .models import Articulo, CategoriaBlog
 
 
 def get_full_media_url(obj, field_name):
-    """Función helper para obtener URL completa de imagen"""
     field = getattr(obj, field_name, None)
     if field and field.name:
-        try:
-            request = getattr(obj, '_request', None)
-            if request:
-                return request.build_absolute_uri(field.url)
-        except Exception:
-            pass
-        return f"{settings.SERVER_URL}{settings.MEDIA_URL}{field.name}"
+        return f"{settings.SERVER_URL}{field.url}"
     return None
 
 
@@ -58,14 +51,15 @@ class ArticuloSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'creado', 'actualizado']
     
     def get_imagen_url(self, obj):
-        """Retorna la URL completa de la imagen"""
-        return get_full_media_url(obj, 'imagen')
+        request = self.context.get('request')
+        if obj.imagen and obj.imagen.name:
+            return request.build_absolute_uri(obj.imagen.url) if request else get_full_media_url(obj, 'imagen')
+        return None
 
 
 class ArticuloListSerializer(serializers.ModelSerializer):
     categoria = CategoriaBlogSerializer(read_only=True)
     autor_nombre = serializers.CharField(source='autor.get_full_name', read_only=True)
-    # Campo personalizado para garantizar URL completa de imagen
     imagen_url = serializers.SerializerMethodField()
     
     class Meta:
@@ -77,5 +71,7 @@ class ArticuloListSerializer(serializers.ModelSerializer):
         ]
     
     def get_imagen_url(self, obj):
-        """Retorna la URL completa de la imagen"""
-        return get_full_media_url(obj, 'imagen')
+        request = self.context.get('request')
+        if obj.imagen and obj.imagen.name:
+            return request.build_absolute_uri(obj.imagen.url) if request else get_full_media_url(obj, 'imagen')
+        return None

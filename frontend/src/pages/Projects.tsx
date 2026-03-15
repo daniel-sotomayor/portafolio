@@ -48,11 +48,10 @@ const Projects = () => {
   const [error, setError] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<Proyecto | null>(null)
 
-  // Función para obtener la URL de la imagen con manejo de errores
   const getImageUrl = (project: Proyecto) => {
     const url = project.imagen_url || project.imagen
-    console.log('Project image URL:', project.titulo, url)
-    return url
+    // Convertir URL absoluta a relativa para pasar por el proxy de Vite
+    return url ? url.replace(/^https?:\/\/[^/]+/, '') : url
   }
 
   // Función para cerrar el modal
@@ -202,18 +201,7 @@ const Projects = () => {
                     alt={project.titulo}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
-                    onLoad={(e) => {
-                      console.log('Image loaded successfully:', project.titulo)
-                      const target = e.target as HTMLImageElement
-                      target.style.opacity = '1'
-                    }}
-                    onError={(e) => {
-                      console.error('Image failed to load:', project.titulo, getImageUrl(project))
-                      // Imagen por defecto si falla la carga
-                      const target = e.target as HTMLImageElement
-                      target.src = 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800'
-                    }}
-                    style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
+
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-60" />
                   
@@ -325,15 +313,11 @@ const Projects = () => {
               {/* Imagen */}
               <div className="relative h-64 md:h-96">
                 <img
-                  src={selectedProject.imagen_url || selectedProject.imagen}
+                  src={(selectedProject.imagen_url || selectedProject.imagen)?.replace(/^https?:\/\/[^/]+/, '')}
                   alt={selectedProject.titulo}
                   className="w-full h-full object-cover"
                   loading="lazy"
-                  onError={(e) => {
-                    console.error('Modal image failed to load:', selectedProject.titulo, selectedProject.imagen_url || selectedProject.imagen)
-                    const target = e.target as HTMLImageElement
-                    target.src = 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800'
-                  }}
+                  onError={(e) => (e.target as HTMLImageElement).style.opacity = '0.3'}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent" />
               </div>
