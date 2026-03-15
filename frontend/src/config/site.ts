@@ -29,7 +29,7 @@ interface SiteConfig {
 
 const siteConfig: SiteConfig = {
   siteName: import.meta.env.VITE_SITE_NAME || 'DevPortfolio',
-  ownerName: import.meta.env.VITE_OWNER_NAME || 'Tu Nombre',
+  ownerName: import.meta.env.VITE_OWNER_NAME || 'Daniel Sotomayor',
   ownerTitle: import.meta.env.VITE_OWNER_TITLE || 'Desarrollador Full Stack',
   email: import.meta.env.VITE_CONTACT_EMAIL || 'email@ejemplo.com',
   phone: import.meta.env.VITE_CONTACT_PHONE || '',
@@ -42,7 +42,8 @@ const siteConfig: SiteConfig = {
     twitter: import.meta.env.VITE_TWITTER_URL || '',
   },
   api: {
-    baseUrl: import.meta.env.VITE_API_URL || '/api',
+    // Usar la variable de entorno o значение por defecto correcto
+    baseUrl: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL + '/api' : '/api',
     contactEndpoint: import.meta.env.VITE_API_CONTACT_ENDPOINT || '/contacto/',
   }
 }

@@ -31,7 +31,7 @@ export default defineConfig({
         "style-src 'self' 'unsafe-inline'",
         "img-src 'self' data: https: blob:",
         "font-src 'self' data:",
-        "connect-src 'self' https: wss:",
+        "connect-src 'self' http://localhost:8000 https: wss:", // Allow localhost for API
         "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
         "object-src 'none'",
         "base-uri 'self'",

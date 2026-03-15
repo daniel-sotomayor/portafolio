@@ -376,7 +376,7 @@ const Contact = () => {
                         className={`w-full px-4 py-3 bg-dark-800 border rounded-lg focus:outline-none transition-colors ${
                           errors.name ? 'border-red-500 focus:border-red-500' : 'border-dark-700 focus:border-primary-500'
                         }`}
-                        placeholder="Tu nombre"
+                        placeholder="Daniel Tomas Sotomayor Romero"
                       />
                       {errors.name && (
                         <p id="name-error" className="mt-1 text-sm text-red-400" role="alert">

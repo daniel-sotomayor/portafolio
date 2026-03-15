@@ -1,36 +1,126 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, User, ArrowRight } from 'lucide-react'
+import siteConfig from '../config/site'
+
+// Tipos para la API
+interface Articulo {
+  id: number
+  titulo: string
+  slug: string
+  resumen: string
+  imagen: string
+  categoria: Categoria | null
+  autor_nombre: string
+  etiquetas: string[]
+  featured: boolean
+  fecha_publicacion: string
+}
+
+interface Categoria {
+  id: number
+  nombre: string
+  slug: string
+}
+
+// Función para formatear fechas
+const formatDate = (dateString: string): string => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleDateString('es-VE', { day: 'numeric', month: 'long', year: 'numeric' })
+}
 
 const Blog = () => {
-  const posts = [
-    {
-      id: 1,
-      title: 'Cómo construir una API REST con Django',
-      excerpt: 'Aprende a crear una API REST robusta y escalable usando Django REST Framework.',
-      date: '15 Marzo, 2024',
-      author: 'Tu Nombre',
-      category: 'Backend',
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'
-    },
-    {
-      id: 2,
-      title: 'Introducción a React 18 con TypeScript',
-      excerpt: 'Una guía completa para empezar a usar React 18 con TypeScript en tus proyectos.',
-      date: '10 Marzo, 2024',
-      author: 'Tu Nombre',
-      category: 'Frontend',
-      image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800'
-    },
-    {
-      id: 3,
-      title: 'Optimización de rendimiento en aplicaciones web',
-      excerpt: 'Técnicas y mejores prácticas para mejorar el rendimiento de tu sitio web.',
-      date: '5 Marzo, 2024',
-      author: 'Tu Nombre',
-      category: 'Rendimiento',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800'
+  const [posts, setPosts] = useState<Articulo[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        console.log('Fetching from:', `${siteConfig.api.baseUrl}/blog/`)
+        const response = await fetch(`${siteConfig.api.baseUrl}/blog/`)
+        console.log('Response status:', response.status)
+        if (!response.ok) {
+          throw new Error('Error al cargar artículos')
+        }
+        const data = await response.json()
+        console.log('Blog data:', data)
+        // Extraer el array de resultados si existe paginación
+        setPosts(data.results || data)
+      } catch (err) {
+        console.error('Error fetching posts:', err)
+        setError('No se pudieron cargar los artículos')
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
+
+    fetchPosts()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-dark-400">Cargando artículos...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-primary-600 text-white rounded-lg"
+          >
+            Reintentar
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Si no hay posts, mostrar mensaje
+  if (posts.length === 0) {
+    return (
+      <div className="min-h-screen pt-20">
+        {/* Header */}
+        <section className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+                <span className="text-gradient">Blog</span>
+              </h1>
+              <p className="text-dark-400 text-lg max-w-2xl">
+                Artículos sobre desarrollo web, tecnología y mejores prácticas.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Mensaje cuando no hay artículos */}
+        <section className="py-20 px-4 pb-20">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="glass p-12 rounded-3xl">
+              <p className="text-dark-400 text-lg">
+                No hay artículos publicados aún. ¡Vuelve pronto!
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen pt-20">
@@ -68,13 +158,17 @@ const Blog = () => {
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={post.image}
-                    alt={post.title}
+                    src={post.imagen}
+                    alt={post.titulo}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.src = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'
+                    }}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-primary-600 text-white text-sm rounded-full">
-                      {post.category}
+                      {post.categoria?.nombre || 'General'}
                     </span>
                   </div>
                 </div>
@@ -82,20 +176,20 @@ const Blog = () => {
                 {/* Content */}
                 <div className="p-6">
                   <h2 className="text-xl font-bold mb-2 group-hover:text-primary-400 transition-colors">
-                    {post.title}
+                    {post.titulo}
                   </h2>
                   <p className="text-dark-400 mb-4 line-clamp-2">
-                    {post.excerpt}
+                    {post.resumen}
                   </p>
                   
                   <div className="flex items-center justify-between text-sm text-dark-500">
                     <div className="flex items-center gap-2">
                       <Calendar size={14} />
-                      <span>{post.date}</span>
+                      <span>{formatDate(post.fecha_publicacion)}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <User size={14} />
-                      <span>{post.author}</span>
+                      <span>{post.autor_nombre || 'Autor'}</span>
                     </div>
                   </div>
 

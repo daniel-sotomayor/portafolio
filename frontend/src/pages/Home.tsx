@@ -7,11 +7,37 @@ import { ArrowDown, Mail } from 'lucide-react'
 import Hero3D from '../components/3d/Hero3D'
 import siteConfig from '../config/site'
 
+// Tipo para el perfil de la API
+interface Perfil {
+  nombre_completo: string
+  titulo_profesional: string
+  bio_corta: string
+  bio_larga: string
+  email: string
+  telefono: string
+  ubicacion: string
+  foto_perfil: string
+  cv_pdf: string
+  redes_sociales: {
+    github?: string
+    linkedin?: string
+    twitter?: string
+  }
+  color_primario: string
+  color_secundario: string
+  color_oscuro: string
+  color_claro: string
+}
+
 const Home = () => {
   const [text, setText] = useState('')
-  const fullText = siteConfig.ownerTitle
+  const [perfil, setPerfil] = useState<Perfil | null>(null)
   
-  // Typewriter effect - OWASP: No sensitive data exposed in source
+  // Usar valores por defecto del config
+  const fullText = perfil?.titulo_profesional || siteConfig.ownerTitle
+  const ownerName = perfil?.nombre_completo || siteConfig.ownerName
+  
+  // Typewriter effect
   useEffect(() => {
     let index = 0
     const interval = setInterval(() => {
@@ -24,6 +50,24 @@ const Home = () => {
     }, 100)
     return () => clearInterval(interval)
   }, [fullText])
+
+  // Fetch del perfil público
+  useEffect(() => {
+    const fetchPerfil = async () => {
+      try {
+        const response = await fetch(`${siteConfig.api.baseUrl}/perfil/public`)
+        if (response.ok) {
+          const data = await response.json()
+          setPerfil(data)
+        }
+      } catch (err) {
+        console.error('Error fetching perfil:', err)
+        // Si falla, usamos los valores por defecto
+      }
+    }
+
+    fetchPerfil()
+  }, [])
 
   // OWASP: Remover autoRotate para prevenir motion sickness
   // Los usuarios pueden controlar manualmente la rotación si desean
@@ -62,14 +106,13 @@ const Home = () => {
               Hola, soy
             </h2>
             <h1 className="text-5xl md:text-7xl font-display font-bold mb-4">
-              <span className="text-gradient">{siteConfig.ownerName}</span>
+              <span className="text-gradient">{ownerName}</span>
             </h1>
             <p className="text-2xl md:text-3xl text-dark-300 mb-8 h-10" aria-label={`Título: ${text}`}>
               {text}<span className="animate-pulse" aria-hidden="true">|</span>
             </p>
             <p className="text-dark-400 text-lg mb-8 max-w-2xl mx-auto">
-              Creo experiencias digitales innovadoras y funcionales con las 
-              tecnologías más modernas del desarrollo web.
+              {perfil?.bio_corta || 'Creo experiencias digitales innovadoras y funcionales con las tecnologías más modernas del desarrollo web.'}
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">

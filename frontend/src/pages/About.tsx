@@ -1,14 +1,98 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, Mail, Download } from 'lucide-react'
+import siteConfig from '../config/site'
+
+// Tipos para la API
+interface Habilidad {
+  id: number
+  nombre: string
+  icono: string
+  categoria: number
+  categoria_nombre: string
+  nivel: number
+  descripcion: string
+  anios_experiencia: string
+  orden: number
+}
+
+interface Experiencia {
+  id: number
+  empresa: string
+  cargo: string
+  descripcion: string
+  logo: string
+  ubicacion: string
+  url_empresa: string
+  fecha_inicio: string
+  fecha_fin: string | null
+  actual: boolean
+  orden: number
+}
+
+// Función para formatear fechas
+const formatDate = (dateString: string): string => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleDateString('es-VE', { month: 'short', year: 'numeric' })
+}
 
 const About = () => {
-  const skills = {
+  const [habilidades, setHabilidades] = useState<Habilidad[]>([])
+  const [experiencia, setExperiencia] = useState<Experiencia[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch habilidades (con categorías) - la API devuelve paginación
+        const habilidadesResponse = await fetch(`${siteConfig.api.baseUrl}/habilidades/`)
+        const habilidadesData = await habilidadesResponse.json()
+        // Extraer el array de resultados si existe paginación
+        const habilidadesList = habilidadesData.results || habilidadesData
+        
+        // Fetch experiencia laboral
+        const experienciaResponse = await fetch(`${siteConfig.api.baseUrl}/experiencia/laboral`)
+        const experienciaData = await experienciaResponse.json()
+        // Extraer el array de resultados si existe paginación
+        const experienciaList = experienciaData.results || experienciaData
+        
+        setHabilidades(habilidadesList)
+        setExperiencia(experienciaList)
+      } catch (err) {
+        console.error('Error fetching data:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Agrupar habilidades por categoría
+  // La API devuelve un array plano de habilidades con categoria_nombre
+  const groupedSkills = habilidades.reduce((acc, h) => {
+    const catName = h.categoria_nombre || 'Otros'
+    if (!acc[catName]) {
+      acc[catName] = []
+    }
+    acc[catName].push(h)
+    return acc
+  }, {} as Record<string, Habilidad[]>)
+
+  // Si no hay datos de la API, usar valores por defecto para no romper el diseño
+  const skillsToShow = Object.keys(groupedSkills).length > 0 ? groupedSkills : {
     frontend: ['React', 'Vue.js', 'Next.js', 'TypeScript', 'Tailwind CSS'],
     backend: ['Django', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB'],
     tools: ['Git', 'Docker', 'AWS', 'Figma', 'Jest']
   }
 
-  const experience = [
+  const experienceToShow = experiencia.length > 0 ? experiencia.map(exp => ({
+    company: exp.empresa,
+    role: exp.cargo,
+    period: `${formatDate(exp.fecha_inicio)} - ${exp.actual ? 'Presente' : (exp.fecha_fin ? formatDate(exp.fecha_fin) : '')}`,
+    description: exp.descripcion
+  })) : [
     {
       company: 'TechCorp',
       role: 'Senior Full Stack Developer',
@@ -28,6 +112,17 @@ const About = () => {
       description: 'Creación de sitios web responsivos y aplicaciones interactivas.'
     }
   ]
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-dark-400">Cargando información...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen pt-20">
@@ -51,15 +146,15 @@ const About = () => {
               <div className="flex flex-wrap gap-4 text-dark-300 mb-8">
                 <div className="flex items-center gap-2">
                   <MapPin size={18} className="text-primary-400" />
-                  <span>Venezuela</span>
+                  <span>{siteConfig.location}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar size={18} className="text-primary-400" />
-                  <span>5+ años de experiencia</span>
+                  <span>{siteConfig.experience}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail size={18} className="text-primary-400" />
-                  <span>email@ejemplo.com</span>
+                  <span>{siteConfig.email}</span>
                 </div>
               </div>
               <button className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold transition-colors">
@@ -82,7 +177,7 @@ const About = () => {
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 glass p-6 rounded-xl">
-                <div className="text-4xl font-bold text-gradient">50+</div>
+                <div className="text-4xl font-bold text-gradient">{siteConfig.projectsCompleted}</div>
                 <div className="text-dark-400">Proyectos completados</div>
               </div>
             </motion.div>
@@ -108,7 +203,7 @@ const About = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {Object.entries(skills).map(([category, skillList], index) => (
+            {Object.entries(skillsToShow).map(([category, skillList], index) => (
               <motion.div
                 key={category}
                 className="glass p-8 rounded-2xl"
@@ -121,12 +216,22 @@ const About = () => {
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {skillList.map((skill) => (
+                  {/* Si es array de strings (datos por defecto) */}
+                  {Array.isArray(skillList) && typeof skillList[0] === 'string' && (skillList as string[]).map((skill) => (
                     <span
                       key={skill}
                       className="px-4 py-2 bg-dark-800 rounded-lg text-dark-300"
                     >
                       {skill}
+                    </span>
+                  ))}
+                  {/* Si es array de objetos (datos de API) */}
+                  {Array.isArray(skillList) && typeof skillList[0] === 'object' && (skillList as Habilidad[]).map((skill) => (
+                    <span
+                      key={skill.id}
+                      className="px-4 py-2 bg-dark-800 rounded-lg text-dark-300"
+                    >
+                      {skill.nombre}
                     </span>
                   ))}
                 </div>
@@ -154,7 +259,7 @@ const About = () => {
           </motion.div>
 
           <div className="space-y-6">
-            {experience.map((exp, index) => (
+            {experienceToShow.map((exp, index) => (
               <motion.div
                 key={index}
                 className="glass p-6 rounded-2xl"
