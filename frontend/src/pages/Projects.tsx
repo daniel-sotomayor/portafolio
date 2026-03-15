@@ -11,7 +11,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github, FileText, X, ArrowLeft } from 'lucide-react'
+import { ExternalLink, Github, FileText, X, ArrowRight, ArrowLeft } from 'lucide-react'
 import siteConfig from '../config/site'
 
 // Tipo para proyecto de la API

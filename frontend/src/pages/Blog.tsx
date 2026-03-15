@@ -9,6 +9,7 @@
  */
 
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, User, ArrowRight } from 'lucide-react'
 import siteConfig from '../config/site'
@@ -221,7 +222,7 @@ const Blog = () => {
                   </div>
 
                   <a
-                    href="#"
+                    href={`/blog/${post.slug}`}
                     className="inline-flex items-center gap-2 mt-4 text-primary-400 hover:text-primary-300 transition-colors"
                   >
                     Leer más

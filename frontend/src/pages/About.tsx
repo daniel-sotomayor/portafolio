@@ -15,6 +15,23 @@ import { Calendar, MapPin, Mail, Download } from 'lucide-react'
 import siteConfig from '../config/site'
 
 // Tipos para la API
+interface Perfil {
+  nombre_completo: string
+  titulo_profesional: string
+  bio_corta: string
+  bio_larga: string
+  email: string
+  telefono: string
+  ubicacion: string
+  foto_perfil: string
+  cv_pdf: string
+  redes_sociales: {
+    github?: string
+    linkedin?: string
+    twitter?: string
+  }
+}
+
 interface Habilidad {
   id: number
   nombre: string
@@ -51,11 +68,19 @@ const formatDate = (dateString: string): string => {
 const About = () => {
   const [habilidades, setHabilidades] = useState<Habilidad[]>([])
   const [experiencia, setExperiencia] = useState<Experiencia[]>([])
+  const [perfil, setPerfil] = useState<Perfil | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch del perfil público
+        const perfilResponse = await fetch(`${siteConfig.api.baseUrl}/perfil/public`)
+        if (perfilResponse.ok) {
+          const perfilData = await perfilResponse.json()
+          setPerfil(perfilData)
+        }
+        
         // Fetch habilidades (con categorías) - la API devuelve paginación
         const habilidadesResponse = await fetch(`${siteConfig.api.baseUrl}/habilidades/`)
         const habilidadesData = await habilidadesResponse.json()
@@ -168,7 +193,14 @@ const About = () => {
                   <span>{siteConfig.email}</span>
                 </div>
               </div>
-              <button className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold transition-colors">
+              <button 
+                className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold transition-colors"
+                onClick={() => {
+                  if (perfil?.cv_pdf) {
+                    window.open(perfil.cv_pdf, '_blank')
+                  }
+                }}
+              >
                 <Download size={18} />
                 Descargar CV
               </button>
@@ -182,9 +214,13 @@ const About = () => {
             >
               <div className="aspect-square rounded-2xl overflow-hidden glass">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"
+                  src={perfil?.foto_perfil || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"}
                   alt="Profile"
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement
+                    target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600'
+                  }}
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 glass p-6 rounded-xl">
