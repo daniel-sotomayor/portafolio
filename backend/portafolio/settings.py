@@ -15,7 +15,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-chang
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,localhost:8000').split(',')
+
+# URL base del servidor (usada para construir URLs absolutas en la API)
+# En desarrollo: http://localhost:8000
+# En producción: https://tusitio.com
+SERVER_URL = os.environ.get('SERVER_URL', 'http://localhost:8000')
 
 # Application definition
 

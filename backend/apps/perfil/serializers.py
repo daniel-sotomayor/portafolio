@@ -1,5 +1,20 @@
 from rest_framework import serializers
+from django.conf import settings
 from .models import Perfil
+
+
+def get_full_media_url(obj, field_name):
+    """Función helper para obtener URL completa de archivo"""
+    field = getattr(obj, field_name, None)
+    if field and field.name:
+        try:
+            request = getattr(obj, '_request', None)
+            if request:
+                return request.build_absolute_uri(field.url)
+        except Exception:
+            pass
+        return f"{settings.SERVER_URL}{settings.MEDIA_URL}{field.name}"
+    return None
 
 
 class PerfilSerializer(serializers.ModelSerializer):
@@ -25,21 +40,15 @@ class PerfilSerializer(serializers.ModelSerializer):
     
     def get_foto_perfil_url(self, obj):
         """Retorna la URL completa de la foto de perfil"""
-        if obj.foto_perfil:
-            return obj.foto_perfil.url
-        return None
+        return get_full_media_url(obj, 'foto_perfil')
     
     def get_cv_pdf_url(self, obj):
         """Retorna la URL completa del CV PDF"""
-        if obj.cv_pdf:
-            return obj.cv_pdf.url
-        return None
+        return get_full_media_url(obj, 'cv_pdf')
     
     def get_meta_imagen_url(self, obj):
         """Retorna la URL completa de la imagen meta"""
-        if obj.meta_imagen:
-            return obj.meta_imagen.url
-        return None
+        return get_full_media_url(obj, 'meta_imagen')
 
 
 class PerfilPublicSerializer(serializers.ModelSerializer):
@@ -63,18 +72,12 @@ class PerfilPublicSerializer(serializers.ModelSerializer):
     
     def get_foto_perfil_url(self, obj):
         """Retorna la URL completa de la foto de perfil"""
-        if obj.foto_perfil:
-            return obj.foto_perfil.url
-        return None
+        return get_full_media_url(obj, 'foto_perfil')
     
     def get_cv_pdf_url(self, obj):
         """Retorna la URL completa del CV PDF"""
-        if obj.cv_pdf:
-            return obj.cv_pdf.url
-        return None
+        return get_full_media_url(obj, 'cv_pdf')
     
     def get_meta_imagen_url(self, obj):
         """Retorna la URL completa de la imagen meta"""
-        if obj.meta_imagen:
-            return obj.meta_imagen.url
-        return None
+        return get_full_media_url(obj, 'meta_imagen')

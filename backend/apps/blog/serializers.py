@@ -10,7 +10,22 @@ Fecha de creación: 2024
 """
 
 from rest_framework import serializers
+from django.conf import settings
 from .models import Articulo, CategoriaBlog
+
+
+def get_full_media_url(obj, field_name):
+    """Función helper para obtener URL completa de imagen"""
+    field = getattr(obj, field_name, None)
+    if field and field.name:
+        try:
+            request = getattr(obj, '_request', None)
+            if request:
+                return request.build_absolute_uri(field.url)
+        except Exception:
+            pass
+        return f"{settings.SERVER_URL}{settings.MEDIA_URL}{field.name}"
+    return None
 
 
 class CategoriaBlogSerializer(serializers.ModelSerializer):
@@ -44,9 +59,7 @@ class ArticuloSerializer(serializers.ModelSerializer):
     
     def get_imagen_url(self, obj):
         """Retorna la URL completa de la imagen"""
-        if obj.imagen:
-            return obj.imagen.url
-        return None
+        return get_full_media_url(obj, 'imagen')
 
 
 class ArticuloListSerializer(serializers.ModelSerializer):
@@ -65,6 +78,4 @@ class ArticuloListSerializer(serializers.ModelSerializer):
     
     def get_imagen_url(self, obj):
         """Retorna la URL completa de la imagen"""
-        if obj.imagen:
-            return obj.imagen.url
-        return None
+        return get_full_media_url(obj, 'imagen')

@@ -10,6 +10,7 @@ Fecha de creación: 2024
 """
 
 from rest_framework import serializers
+from django.conf import settings
 from .models import Proyecto, CategoriaProyecto
 
 
@@ -17,6 +18,22 @@ class CategoriaProyectoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoriaProyecto
         fields = ['id', 'nombre', 'slug', 'descripcion', 'color']
+
+
+def get_full_media_url(obj, field_name):
+    """Función helper para obtener URL completa de imagen"""
+    field = getattr(obj, field_name, None)
+    if field and field.name:
+        # Intentar obtener del request primero
+        try:
+            request = getattr(obj, '_request', None)
+            if request:
+                return request.build_absolute_uri(field.url)
+        except Exception:
+            pass
+        # Fallback: usar SERVER_URL configurado
+        return f"{settings.SERVER_URL}{settings.MEDIA_URL}{field.name}"
+    return None
 
 
 class ProyectoSerializer(serializers.ModelSerializer):
@@ -45,9 +62,7 @@ class ProyectoSerializer(serializers.ModelSerializer):
     
     def get_imagen_url(self, obj):
         """Retorna la URL completa de la imagen"""
-        if obj.imagen:
-            return obj.imagen.url
-        return None
+        return get_full_media_url(obj, 'imagen')
 
 
 class ProyectoListSerializer(serializers.ModelSerializer):
@@ -65,6 +80,4 @@ class ProyectoListSerializer(serializers.ModelSerializer):
     
     def get_imagen_url(self, obj):
         """Retorna la URL completa de la imagen"""
-        if obj.imagen:
-            return obj.imagen.url
-        return None
+        return get_full_media_url(obj, 'imagen')
