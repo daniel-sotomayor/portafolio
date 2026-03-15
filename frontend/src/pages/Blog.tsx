@@ -9,7 +9,6 @@
  */
 
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, User, ArrowRight } from 'lucide-react'
 import siteConfig from '../config/site'
@@ -190,10 +189,18 @@ const Blog = () => {
                     src={post.imagen_url || post.imagen}
                     alt={post.titulo}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    onLoad={(e) => {
+                      console.log('Blog image loaded:', post.titulo)
+                      const target = e.target as HTMLImageElement
+                      target.style.opacity = '1'
+                    }}
                     onError={(e) => {
+                      console.error('Blog image failed:', post.titulo, post.imagen_url || post.imagen)
                       const target = e.target as HTMLImageElement
                       target.src = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'
                     }}
+                    style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-primary-600 text-white text-sm rounded-full">

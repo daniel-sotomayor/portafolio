@@ -11,7 +11,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github, FileText, X, ArrowRight, ArrowLeft } from 'lucide-react'
+import { ExternalLink, Github, FileText, X, ArrowRight } from 'lucide-react'
 import siteConfig from '../config/site'
 
 // Tipo para proyecto de la API
@@ -47,6 +47,13 @@ const Projects = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<Proyecto | null>(null)
+
+  // Función para obtener la URL de la imagen con manejo de errores
+  const getImageUrl = (project: Proyecto) => {
+    const url = project.imagen_url || project.imagen
+    console.log('Project image URL:', project.titulo, url)
+    return url
+  }
 
   // Función para cerrar el modal
   const closeModal = useCallback(() => {
@@ -191,14 +198,22 @@ const Projects = () => {
                 {/* Image */}
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={project.imagen_url || project.imagen}
+                    src={getImageUrl(project)}
                     alt={project.titulo}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    onLoad={(e) => {
+                      console.log('Image loaded successfully:', project.titulo)
+                      const target = e.target as HTMLImageElement
+                      target.style.opacity = '1'
+                    }}
                     onError={(e) => {
+                      console.error('Image failed to load:', project.titulo, getImageUrl(project))
                       // Imagen por defecto si falla la carga
                       const target = e.target as HTMLImageElement
                       target.src = 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800'
                     }}
+                    style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-60" />
                   
@@ -313,7 +328,9 @@ const Projects = () => {
                   src={selectedProject.imagen_url || selectedProject.imagen}
                   alt={selectedProject.titulo}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                   onError={(e) => {
+                    console.error('Modal image failed to load:', selectedProject.titulo, selectedProject.imagen_url || selectedProject.imagen)
                     const target = e.target as HTMLImageElement
                     target.src = 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800'
                   }}

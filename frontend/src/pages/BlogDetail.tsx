@@ -11,7 +11,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, User, ArrowLeft, ArrowRight, Tag } from 'lucide-react'
+import { Calendar, User, ArrowLeft, Tag } from 'lucide-react'
 import siteConfig from '../config/site'
 
 // Interfaz para el artículo completo
@@ -141,10 +141,18 @@ const BlogDetail = () => {
               src={articulo.imagen_url || articulo.imagen}
               alt={articulo.titulo}
               className="w-full h-full object-cover"
+              loading="lazy"
+              onLoad={(e) => {
+                console.log('BlogDetail image loaded:', articulo.titulo)
+                const target = e.target as HTMLImageElement
+                target.style.opacity = '1'
+              }}
               onError={(e) => {
+                console.error('BlogDetail image failed:', articulo.titulo, articulo.imagen_url || articulo.imagen)
                 const target = e.target as HTMLImageElement
                 target.src = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'
               }}
+              style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-60" />
             
