@@ -1,5 +1,5 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
+from apps.utils.routers import NoSuffixRouter as DefaultRouter
 from .views import PerfilViewSet
 
 router = DefaultRouter(trailing_slash=False)

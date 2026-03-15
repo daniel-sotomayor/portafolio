@@ -9,8 +9,6 @@ from django.conf.urls.static import static
 # Parche para evitar conflicto con drf_format_suffix converter
 # https://github.com/encode/django-rest-framework/issues/6805
 import django
-from django.urls.converters import get_converter
-from django.urls import converters
 
 # Verificar si el converter ya está registrado y limpiar si es necesario
 if hasattr(django.urls.converters, '_registry'):

@@ -18,7 +18,7 @@ class PerfilAdmin(admin.ModelAdmin):
             'fields': ('foto_perfil', 'cv_pdf')
         }),
         ('Redes sociales', {
-            'fields': ('redes_sociales'),
+            'fields': ('redes_sociales',),
             'classes': ('collapse',)
         }),
         ('Personalización', {
