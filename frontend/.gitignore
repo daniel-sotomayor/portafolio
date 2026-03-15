@@ -10,7 +10,13 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
+*.tsbuildinfo
+# Environment variables - NO commit sensitive data
+.env
+.env.local
+.env.production
+.env.*.local
+
 
 # Editor directories and files
 .vscode/*

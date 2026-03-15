@@ -1,0 +1,181 @@
+import { motion } from 'framer-motion'
+import { Calendar, MapPin, Mail, Download } from 'lucide-react'
+
+const About = () => {
+  const skills = {
+    frontend: ['React', 'Vue.js', 'Next.js', 'TypeScript', 'Tailwind CSS'],
+    backend: ['Django', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB'],
+    tools: ['Git', 'Docker', 'AWS', 'Figma', 'Jest']
+  }
+
+  const experience = [
+    {
+      company: 'TechCorp',
+      role: 'Senior Full Stack Developer',
+      period: '2022 - Presente',
+      description: 'Liderando el desarrollo de aplicaciones web escalables.'
+    },
+    {
+      company: 'StartupXYZ',
+      role: 'Full Stack Developer',
+      period: '2020 - 2022',
+      description: 'Desarrollo de APIs RESTful y interfaces de usuario modernas.'
+    },
+    {
+      company: 'AgencyDigital',
+      role: 'Frontend Developer',
+      period: '2018 - 2020',
+      description: 'Creación de sitios web responsivos y aplicaciones interactivas.'
+    }
+  ]
+
+  return (
+    <div className="min-h-screen pt-20">
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+                Sobre <span className="text-gradient">Mí</span>
+              </h1>
+              <p className="text-dark-400 text-lg mb-6">
+                Soy un desarrollador full stack apasionado por crear experiencias 
+                digitales extraordinarias. Con más de 5 años de experiencia, 
+                me especializo en construir aplicaciones web modernas y eficientes.
+              </p>
+              <div className="flex flex-wrap gap-4 text-dark-300 mb-8">
+                <div className="flex items-center gap-2">
+                  <MapPin size={18} className="text-primary-400" />
+                  <span>Venezuela</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar size={18} className="text-primary-400" />
+                  <span>5+ años de experiencia</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail size={18} className="text-primary-400" />
+                  <span>email@ejemplo.com</span>
+                </div>
+              </div>
+              <button className="flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold transition-colors">
+                <Download size={18} />
+                Descargar CV
+              </button>
+            </motion.div>
+
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="aspect-square rounded-2xl overflow-hidden glass">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 glass p-6 rounded-xl">
+                <div className="text-4xl font-bold text-gradient">50+</div>
+                <div className="text-dark-400">Proyectos completados</div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section className="py-20 px-4 bg-dark-900">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              Habilidades
+            </h2>
+            <p className="text-dark-400 max-w-2xl mx-auto">
+              Tecnologías con las que trabajo día a día
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {Object.entries(skills).map(([category, skillList], index) => (
+              <motion.div
+                key={category}
+                className="glass p-8 rounded-2xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <h3 className="text-xl font-bold mb-4 capitalize text-gradient">
+                  {category}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {skillList.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-4 py-2 bg-dark-800 rounded-lg text-dark-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              Experiencia
+            </h2>
+            <p className="text-dark-400 max-w-2xl mx-auto">
+              Mi trayectoria profesional
+            </p>
+          </motion.div>
+
+          <div className="space-y-6">
+            {experience.map((exp, index) => (
+              <motion.div
+                key={index}
+                className="glass p-6 rounded-2xl"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <h3 className="text-xl font-bold">{exp.role}</h3>
+                  <span className="text-primary-400">{exp.period}</span>
+                </div>
+                <p className="text-secondary-400 mb-2">{exp.company}</p>
+                <p className="text-dark-400">{exp.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+export default About
