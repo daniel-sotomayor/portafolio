@@ -1,3 +1,14 @@
+/**
+ * About.tsx - Página Acerca de Mí
+ * 
+ * Esta página muestra información sobre el desarrollador, incluyendo
+ * habilidades técnicas y experiencia laboral.
+ * Los datos se obtienen dinámicamente desde la API de Django.
+ * 
+ * @module About
+ * @description Componente de la página About
+ */
+
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, Mail, Download } from 'lucide-react'

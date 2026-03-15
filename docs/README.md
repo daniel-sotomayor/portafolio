@@ -1,9 +1,23 @@
-# 📚 AutoDoc Generator Pro - Sistema de Documentación Automática
+# 📚 Portafolio Profesional - Documentación del Proyecto
 
-> **Versión:** 1.0.0  
+> **Versión del Proyecto:** 1.0.0  
 > **Fecha de Generación:** 2026-03-15  
 > **Proyecto:** Portafolio Profesional  
 > **Tecnologías:** Django 5.0 + Django REST Framework | React 18 + TypeScript + Vite
+> **Autor:** Daniel Sotomayor  
+> **Correo:** danielsotomayor475@email.com
+
+---
+
+## 👤 Información del Autor
+
+| Campo | Valor |
+|-------|-------|
+| **Nombre** | Daniel Sotomayor |
+| **Título** | Desarrollador Full Stack |
+| **Correo** | danielsotomayor475@email.com |
+| **Ubicación** | Venezuela |
+| **GitHub** | github.com/daniel-sotomayor |
 
 ---
 
@@ -87,25 +101,23 @@ python docs/generate_docs.py
 
 ---
 
-## 📋 Tecnologías Documentadas
+## 📋 Tecnologías del Proyecto
 
 ### Backend
 - **Framework:** Django 5.0.6
 - **API:** Django REST Framework 3.14.0
 - **Autenticación:** JWT (djangorestframework-simplejwt)
-- **Documentación API:** drf-yasg
-- **Base de Datos:** PostgreSQL
-- **Almacenamiento:** AWS S3
+- **Base de Datos:** SQLite (desarrollo) / PostgreSQL (producción)
+- **Almacenamiento:** Local (desarrollo) / AWS S3 (producción)
 
 ### Frontend
 - **Framework:** React 18.3.1
 - **Lenguaje:** TypeScript 5.4.5
-- **Build Tool:** Vite 5.2.11
+- **Build Tool:** Vite 5.4.21
 - **Estilos:** Tailwind CSS 3.4.3
 - **3D:** React Three Fiber + Drei
-- **Animaciones:** Framer Motion + GSAP
-- **Estado:** Zustand
-- **HTTP:** Axios
+- **Animaciones:** Framer Motion
+- **HTTP:** Fetch API
 - **Routing:** React Router DOM 6.23.1
 
 ---
@@ -124,11 +136,33 @@ python docs/generate_docs.py
 
 ---
 
-## 📞 Soporte
+## 📄 Licencia
 
-Para actualizar o extender esta documentación, consulta los scripts en `docs/assets/scripts/`.
+Este proyecto es de uso personal y educativo. Todos los derechos reservados.
 
 ---
 
-*Generado automáticamente por AutoDoc Generator Pro*  
-*Sistema de documentación en tiempo real*
+## 👥 Créditos
+
+### Desarrollador Principal
+- **Daniel Sotomayor** - Desarrollador Full Stack
+  - Correo: danielsotomayor475@email.com
+  - GitHub: github.com/daniel-sotomayor
+
+### Tecnologías Utilizadas
+
+| Tecnología | Versión | Propósito |
+|------------|---------|----------|
+| Django | 5.0.6 | Backend Framework |
+| Django REST Framework | 3.14.0 | API REST |
+| React | 18.3.1 | Frontend Framework |
+| TypeScript | 5.4.5 | Tipado estático |
+| Vite | 5.4.21 | Build tool |
+| Tailwind CSS | 3.4.3 | Estilos |
+| React Three Fiber | - | Gráficos 3D |
+| Framer Motion | - | Animaciones |
+
+---
+
+*Documentación generada para el proyecto Portafolio Profesional*  
+*Última actualización: 2026-03-15*

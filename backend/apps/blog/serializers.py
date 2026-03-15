@@ -1,3 +1,14 @@
+"""
+Serializers del Blog
+===================
+
+Este módulo define los serializadores para la API del blog.
+Convierte los modelos de Django a formato JSON para la API.
+
+Autor: Daniel Sotomayor
+Fecha de creación: 2024
+"""
+
 from rest_framework import serializers
 from .models import Articulo, CategoriaBlog
 

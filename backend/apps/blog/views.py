@@ -1,3 +1,14 @@
+"""
+Vistas del Blog
+===============
+
+Este módulo define las vistas (ViewSets) para la API del blog.
+Proporciona endpoints para artículos y categorías de blog.
+
+Autor: Daniel Sotomayor
+Fecha de creación: 2024
+"""
+
 from rest_framework import viewsets, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Articulo, CategoriaBlog

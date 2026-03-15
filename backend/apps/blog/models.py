@@ -1,3 +1,14 @@
+"""
+Modelos del Blog
+================
+
+Este módulo define los modelos de datos para la aplicación de blog.
+Proporciona estructuras para artículos y categorías de blog.
+
+Autor: Daniel Sotomayor
+Fecha de creación: 2024
+"""
+
 from django.db import models
 from django.conf import settings
 

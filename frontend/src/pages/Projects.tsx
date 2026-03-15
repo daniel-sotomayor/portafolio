@@ -1,3 +1,14 @@
+/**
+ * Projects.tsx - Página de Proyectos
+ * 
+ * Esta página muestra una lista de proyectos del portafolio.
+ * Los datos se obtienen dinámicamente desde la API de Django.
+ * Cada proyecto puede tener enlaces a demo y código fuente.
+ * 
+ * @module Projects
+ * @description Componente principal de la página de proyectos
+ */
+
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ExternalLink, Github, ArrowRight } from 'lucide-react'

@@ -1,3 +1,14 @@
+"""
+Vistas de Proyectos
+====================
+
+Este módulo define las vistas (ViewSets) para la API de proyectos.
+Proporciona endpoints para proyectos y categorías de proyectos.
+
+Autor: Daniel Sotomayor
+Fecha de creación: 2024
+"""
+
 from rest_framework import viewsets, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Proyecto, CategoriaProyecto

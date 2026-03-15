@@ -1,3 +1,14 @@
+"""
+Modelos de Proyectos
+====================
+
+Este módulo define los modelos de datos para la aplicación de proyectos.
+Proporciona estructuras para proyectos y categorías de proyectos.
+
+Autor: Daniel Sotomayor
+Fecha de creación: 2024
+"""
+
 from django.db import models
 
 

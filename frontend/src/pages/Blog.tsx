@@ -1,9 +1,22 @@
+/**
+ * Blog.tsx - Página de Blog
+ * 
+ * Esta página muestra una lista de artículos publicados en el blog.
+ * Los datos se obtienen dinámicamente desde la API de Django.
+ * 
+ * @module Blog
+ * @description Componente principal de la página de blog
+ */
+
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, User, ArrowRight } from 'lucide-react'
 import siteConfig from '../config/site'
 
-// Tipos para la API
+/**
+ * Interfaz que define la estructura de un artículo del blog
+ * obtenida desde la API de Django
+ */
 interface Articulo {
   id: number
   titulo: string
@@ -17,24 +30,38 @@ interface Articulo {
   fecha_publicacion: string
 }
 
+// Interfaz para categorías de blog
 interface Categoria {
   id: number
   nombre: string
   slug: string
 }
 
-// Función para formatear fechas
+/**
+ * Convierte una fecha en formato ISO a una cadena legible en español
+ * @param dateString - Fecha en formato ISO 8601
+ * @returns Fecha formateada en español (ej: "15 de marzo de 2026")
+ */
 const formatDate = (dateString: string): string => {
   if (!dateString) return ''
   const date = new Date(dateString)
   return date.toLocaleDateString('es-VE', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
+/**
+ * Componente principal de la página de Blog
+ * Maneja la carga de artículos desde la API y su renderizado
+ */
 const Blog = () => {
+  // Estado para almacenar los artículos obtenidos de la API
   const [posts, setPosts] = useState<Articulo[]>([])
+  // Estado para indicar si la carga está en proceso
   const [loading, setLoading] = useState(true)
+  // Estado para almacenar mensajes de error
   const [error, setError] = useState<string | null>(null)
 
+  // Efecto que se ejecuta al montar el componente
+  // Realiza la petición a la API para obtener los artículos
   useEffect(() => {
     const fetchPosts = async () => {
       try {
