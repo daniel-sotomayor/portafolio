@@ -14,8 +14,8 @@ drf-yasg>=1.21,<2.0
 # pip install psycopg2-binary
 # Y configura PostgreSQL en settings.py
 
-# Imágenes y media
-Pillow>=10.0,<11.0
+# Imágenes y media - Pillow 11.x tiene mejor soporte
+Pillow>=11.0,<12.0
 
 # Rich text editor
 django-ckeditor>=6.7,<7.0
