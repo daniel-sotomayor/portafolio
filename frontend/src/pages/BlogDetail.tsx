@@ -115,6 +115,17 @@ const BlogDetail = () => {
     )
   }
 
+  // Convierte texto plano a HTML si el contenido no tiene etiquetas
+  const renderContenido = (contenido: string) => {
+    const isHTML = /<[a-z][\s\S]*>/i.test(contenido)
+    if (isHTML) return contenido
+    return contenido
+      .split(/\r?\n\r?\n+/)
+      .filter(p => p.trim())
+      .map(p => `<p>${p.replace(/\r?\n/g, '<br/>')}</p>`)
+      .join('')
+  }
+
   return (
     <div className="min-h-screen pt-20 bg-dark-950">
       {/* Botón de volver */}
@@ -200,7 +211,7 @@ const BlogDetail = () => {
               prose-ul:text-dark-300 prose-ol:text-dark-300
               prose-li:marker:text-primary-400
               prose-hr:border-dark-700"
-            dangerouslySetInnerHTML={{ __html: articulo.contenido }}
+            dangerouslySetInnerHTML={{ __html: renderContenido(articulo.contenido) }}
           />
         </motion.div>
 

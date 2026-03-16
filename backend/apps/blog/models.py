@@ -11,6 +11,7 @@ Fecha de creación: 2024
 
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 
 class CategoriaBlog(models.Model):
@@ -32,7 +33,7 @@ class Articulo(models.Model):
     titulo = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     resumen = models.CharField(max_length=300)
-    contenido = models.TextField()
+    contenido = RichTextField()
     imagen = models.ImageField(upload_to='blog/')
     categoria = models.ForeignKey(
         CategoriaBlog,
