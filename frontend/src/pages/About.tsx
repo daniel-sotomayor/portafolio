@@ -178,7 +178,7 @@ const About = () => {
               </h1>
               <p className="text-dark-400 text-lg mb-6">
                 Soy un desarrollador full stack apasionado por crear experiencias 
-                digitales extraordinarias. Con más de 5 años de experiencia, 
+                digitales extraordinarias. Con más de 1 años de experiencia, 
                 me especializo en construir aplicaciones web modernas y eficientes.
               </p>
               <div className="flex flex-wrap gap-4 text-dark-300 mb-8">

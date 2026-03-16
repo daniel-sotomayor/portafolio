@@ -174,17 +174,17 @@ const Home = () => {
             {[
               {
                 title: 'Desarrollo Frontend',
-                description: 'Interfaces de usuario modernas y responsivas con React, Vue o Angular.',
+                description: 'Interfaces de usuario modernas y responsivas con HTML5, CSS3 y JavaScript.',
                 icon: '🎨'
               },
               {
                 title: 'Desarrollo Backend',
-                description: 'APIs robustas y escalables con Django, Node.js o Ruby on Rails.',
+                description: 'APIs robustas y escalables con Python, Django y PHP',
                 icon: '⚙️'
               },
               {
                 title: 'Base de Datos',
-                description: 'Diseño y optimización de bases de datos PostgreSQL, MySQL o MongoDB.',
+                description: 'Diseño y optimización de bases de datos PostgreSQL, MySQL o Mariadb.',
                 icon: '🗄️'
               }
             ].map((feature, index) => (
