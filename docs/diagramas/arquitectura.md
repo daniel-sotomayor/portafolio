@@ -1,6 +1,6 @@
 # 🏗️ Diagrama de Arquitectura
 
-> **Última Actualización:** 2026-03-15
+> **Última Actualización:** 2026-03-16
 
 ---
 
@@ -96,8 +96,8 @@ Usuario → Formulario → Validación → API → Email → Database
 | Tailwind CSS | Estilos |
 | React Three Fiber | 3D |
 | Framer Motion | Animaciones |
-| Zustand | Estado global |
-| Axios | HTTP Client |
+| Context API | Estado global |
+| Fetch API | HTTP Client |
 
 ### Backend
 | Tecnología | Uso |
@@ -105,9 +105,10 @@ Usuario → Formulario → Validación → API → Email → Database
 | Django 5 | Framework web |
 | Django REST Framework | API REST |
 | JWT | Autenticación |
-| PostgreSQL | Base de datos |
+| SQLite (dev) / PostgreSQL (prod) | Base de datos |
 | drf-yasg | Documentación API |
-| AWS S3 | Almacenamiento |
+| CKEditor | Editor de texto |
+| AWS S3 | Almacenamiento (prod) |
 
 ---
 

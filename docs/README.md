@@ -1,7 +1,7 @@
 # 📚 Portafolio Profesional - Documentación del Proyecto
 
 > **Versión del Proyecto:** 1.0.0  
-> **Fecha de Generación:** 2026-03-15  
+> **Fecha de Generación:** 2026-03-16  
 > **Proyecto:** Portafolio Profesional  
 > **Tecnologías:** Django 5.0 + Django REST Framework | React 18 + TypeScript + Vite
 > **Autor:** Daniel Sotomayor  
@@ -32,7 +32,8 @@ Este sistema de documentación automática genera y mantiene actualizada la docu
 ```
 docs/
 ├── 📄 README.md                      # Este archivo - Índice principal
-├── 📂 api/                          # Documentación de endpoints REST
+├── 📄 CHANGELOG.md                   # Registro de cambios de documentación
+├── � api/                          # Documentación de endpoints REST
 │   ├── index.md                     # Índice de APIs
 │   ├── endpoints.md                 # Listado completo de endpoints
 │   └── autenticacion.md             # Guía de autenticación JWT
@@ -46,16 +47,15 @@ docs/
 │   │   ├── contacto.md              # Modelo de Contacto
 │   │   └── usuarios.md              # Modelo de Usuarios
 │   └── views/                       # Vistas y Serializers
-│       ├── proyectos.md             # ViewSets de Proyectos
-│       ├── perfil.md                # ViewSets de Perfil
-│       └── ...
+│       └── index.md                  # Índice de vistas
 ├── 📂 frontend/                     # Documentación del Frontend
+│   ├── config.md                    # Configuración del frontend
 │   ├── components/                  # Componentes React
 │   │   ├── layout/                  # Componentes de layout
-│   │   ├── ui/                      # Componentes UI
-│   │   └── 3d/                      # Componentes 3D
-│   ├── pages/                       # Páginas de la aplicación
-│   └── services/                    # Servicios y API calls
+│   │   │   └── index.md            # Navbar, Footer, etc.
+│   │   └── ui/                     # Componentes UI
+│   └── pages/                       # Páginas de la aplicación
+│       └── index.md                  # Páginas disponibles
 ├── 📂 diagramas/                    # Diagramas interactivos
 │   ├── arquitectura.md              # Diagrama de arquitectura
 │   ├── database.md                  # Diagrama de base de datos
@@ -63,11 +63,12 @@ docs/
 ├── 📂 manuales/                     # Manuales de usuario
 │   ├── instalacion.md               # Guía de instalación
 │   ├── configuracion.md             # Guía de configuración
-│   ├── admin.md                     # Guía del panel de admin
-│   └── desarrollo.md                # Guía de desarrollo
-└── 📂 assets/                       # Recursos estáticos
-    ├── images/                      # Imágenes
-    └── scripts/                     # Scripts de generación
+│   └── admin.md                     # Guía del panel de admin
+├── 📂 assets/                       # Recursos estáticos
+│   ├── images/                      # Imágenes
+│   └── scripts/                     # Scripts de generación
+├── 📄 reporte-qa-seguridad.md       # Reporte de QA y seguridad
+└── 📄 validacion-seguridad.md       # Validaciones de seguridad
 ```
 
 ---
@@ -104,21 +105,24 @@ python docs/generate_docs.py
 ## 📋 Tecnologías del Proyecto
 
 ### Backend
-- **Framework:** Django 5.0.6
-- **API:** Django REST Framework 3.14.0
+- **Framework:** Django 5.0
+- **API:** Django REST Framework 3.15
 - **Autenticación:** JWT (djangorestframework-simplejwt)
 - **Base de Datos:** SQLite (desarrollo) / PostgreSQL (producción)
 - **Almacenamiento:** Local (desarrollo) / AWS S3 (producción)
+- **Editor de texto:** CKEditor 6.x
+- **Documentación API:** drf-yasg
 
 ### Frontend
-- **Framework:** React 18.3.1
-- **Lenguaje:** TypeScript 5.4.5
-- **Build Tool:** Vite 5.4.21
-- **Estilos:** Tailwind CSS 3.4.3
+- **Framework:** React 18.x
+- **Lenguaje:** TypeScript 5.x
+- **Build Tool:** Vite 5.x
+- **Estilos:** Tailwind CSS 3.x
 - **3D:** React Three Fiber + Drei
 - **Animaciones:** Framer Motion
-- **HTTP:** Fetch API
-- **Routing:** React Router DOM 6.23.1
+- **HTTP:** Fetch API nativa
+- **Routing:** React Router DOM 6.x
+- **Gestión de estado:** Context API / Hooks
 
 ---
 
@@ -126,13 +130,13 @@ python docs/generate_docs.py
 
 | Módulo | Estado | Última Actualización |
 |--------|--------|---------------------|
-| API REST | ✅ Completo | 2026-03-15 |
-| Modelos Django | ✅ Completo | 2026-03-15 |
-| Vistas/Serializers | ✅ Completo | 2026-03-15 |
-| Componentes React | ✅ Completo | 2026-03-15 |
-| Páginas | ✅ Completo | 2026-03-15 |
-| Diagramas | ✅ Completo | 2026-03-15 |
-| Manuales | ✅ Completo | 2026-03-15 |
+| API REST | ✅ Completo | 2026-03-16 |
+| Modelos Django | ✅ Completo | 2026-03-16 |
+| Vistas/Serializers | ✅ Completo | 2026-03-16 |
+| Componentes React | ✅ Completo | 2026-03-16 |
+| Páginas | ✅ Completo | 2026-03-16 |
+| Diagramas | ✅ Completo | 2026-03-16 |
+| Manuales | ✅ Completo | 2026-03-16 |
 
 ---
 
@@ -153,16 +157,16 @@ Este proyecto es de uso personal y educativo. Todos los derechos reservados.
 
 | Tecnología | Versión | Propósito |
 |------------|---------|----------|
-| Django | 5.0.6 | Backend Framework |
-| Django REST Framework | 3.14.0 | API REST |
-| React | 18.3.1 | Frontend Framework |
-| TypeScript | 5.4.5 | Tipado estático |
-| Vite | 5.4.21 | Build tool |
-| Tailwind CSS | 3.4.3 | Estilos |
+| Django | 5.0.x | Backend Framework |
+| Django REST Framework | 3.15.x | API REST |
+| React | 18.x | Frontend Framework |
+| TypeScript | 5.x | Tipado estático |
+| Vite | 5.x | Build tool |
+| Tailwind CSS | 3.x | Estilos |
 | React Three Fiber | - | Gráficos 3D |
 | Framer Motion | - | Animaciones |
 
 ---
 
 *Documentación generada para el proyecto Portafolio Profesional*  
-*Última actualización: 2026-03-15*
+*Última actualización: 2026-03-16*

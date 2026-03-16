@@ -2,7 +2,7 @@
 
 > **App:** `apps.contacto`  
 > **Archivo:** `backend/apps/contacto/models.py`  
-> **Última Actualización:** 2026-03-15
+> **Última Actualización:** 2026-03-16
 
 ---
 

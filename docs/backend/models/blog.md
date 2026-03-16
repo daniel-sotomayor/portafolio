@@ -2,7 +2,7 @@
 
 > **App:** `apps.blog`  
 > **Archivo:** `backend/apps/blog/models.py`  
-> **Última Actualización:** 2026-03-15
+> **Última Actualización:** 2026-03-16
 
 ---
 
