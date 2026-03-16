@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import redirect
 
 # Parche para evitar conflicto con drf_format_suffix converter
 # https://github.com/encode/django-rest-framework/issues/6805
@@ -35,6 +36,7 @@ except ValueError:
 # Para documentación, consulta /docs/api/ en el proyecto
 
 urlpatterns = [
+    path('', lambda request: redirect('admin:index' if request.user.is_authenticated else 'admin:login', permanent=False)),
     path('admin/', admin.site.urls),
     
     # API Apps
