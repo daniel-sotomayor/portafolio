@@ -68,7 +68,7 @@ class ProyectoListSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'titulo', 'slug', 'descripcion_corta', 'imagen', 'imagen_url',
             'categorias', 'tecnologias', 'fecha_inicio',
-            'en_progreso', 'destacado'
+            'en_progreso', 'destacado', 'url_demo', 'url_codigo', 'url_documentacion'
         ]
     
     def get_imagen_url(self, obj):

@@ -163,7 +163,7 @@ const Projects = () => {
     <div className="min-h-screen pt-20">
       {/* Header */}
       <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -182,8 +182,8 @@ const Projects = () => {
 
       {/* Projects Grid */}
       <section className="py-10 px-4 pb-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-8 xl:gap-10">
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -195,7 +195,7 @@ const Projects = () => {
                 onClick={() => setSelectedProject(project)}
               >
                 {/* Image */}
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-64 xl:h-72 overflow-hidden">
                   <img
                     src={getImageUrl(project)}
                     alt={project.titulo}
@@ -257,7 +257,7 @@ const Projects = () => {
 
       {/* CTA */}
       <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl xl:max-w-5xl mx-auto text-center">
           <motion.div
             className="glass p-12 rounded-3xl"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -346,6 +346,45 @@ const Projects = () => {
                   {selectedProject.descripcion_larga || selectedProject.descripcion_corta}
                 </p>
 
+                {/* Botones de navegación */}
+                {(selectedProject.url_demo || selectedProject.url_codigo || selectedProject.url_documentacion) && (
+                  <div className="flex flex-wrap gap-4 mb-6">
+                    {selectedProject.url_demo && (
+                      <a
+                        href={selectedProject.url_demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/btn flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded-full font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:scale-105"
+                      >
+                        <ExternalLink size={18} className="transition-transform duration-300 group-hover/btn:rotate-12" />
+                        Ver Demo
+                      </a>
+                    )}
+                    {selectedProject.url_codigo && (
+                      <a
+                        href={selectedProject.url_codigo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/btn flex items-center gap-2 px-6 py-3 bg-dark-700 hover:bg-dark-600 text-white rounded-full font-semibold transition-all duration-300 border border-dark-500 hover:border-primary-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] hover:scale-105"
+                      >
+                        <Github size={18} className="transition-transform duration-300 group-hover/btn:rotate-12" />
+                        Código Fuente
+                      </a>
+                    )}
+                    {selectedProject.url_documentacion && (
+                      <a
+                        href={selectedProject.url_documentacion}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/btn flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] hover:scale-105"
+                      >
+                        <FileText size={18} className="transition-transform duration-300 group-hover/btn:rotate-12" />
+                        Documentación
+                      </a>
+                    )}
+                  </div>
+                )}
+
                 {/* Tecnologías */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-3 text-white">Tecnologías</h3>
@@ -388,42 +427,6 @@ const Projects = () => {
                   </span>
                 </div>
 
-                {/* Botones de navegación */}
-                <div className="flex flex-wrap gap-4">
-                  {selectedProject.url_demo && (
-                    <a
-                      href={selectedProject.url_demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors"
-                    >
-                      <ExternalLink size={20} />
-                      Live Demo
-                    </a>
-                  )}
-                  {selectedProject.url_codigo && (
-                    <a
-                      href={selectedProject.url_codigo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-dark-700 hover:bg-dark-600 text-white rounded-full font-semibold transition-colors border border-dark-600"
-                    >
-                      <Github size={20} />
-                      Código Fuente
-                    </a>
-                  )}
-                  {selectedProject.url_documentacion && (
-                    <a
-                      href={selectedProject.url_documentacion}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-colors"
-                    >
-                      <FileText size={20} />
-                      Documentación
-                    </a>
-                  )}
-                </div>
               </div>
             </motion.div>
           </motion.div>

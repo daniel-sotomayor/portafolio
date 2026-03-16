@@ -1,6 +1,20 @@
 import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, CheckCircle, AlertCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, CheckCircle, AlertCircle, MessageCircle } from 'lucide-react'
+
+const FacebookIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+)
+
+const InstagramIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <circle cx="12" cy="12" r="4"/>
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+  </svg>
+)
 import siteConfig from '../config/site'
 
 /**
@@ -277,6 +291,25 @@ const Contact = () => {
                         </div>
                       </div>
                     )}
+
+                    {/* WhatsApp */}
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-green-600/20 rounded-lg">
+                        <MessageCircle className="text-green-400" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-1">WhatsApp</h3>
+                        <a
+                          href="https://wa.me/584242987214"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 mt-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-full transition-colors"
+                        >
+                          <MessageCircle size={16} />
+                          Escribirme por WhatsApp
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -316,6 +349,28 @@ const Contact = () => {
                           className="p-4 bg-dark-800 hover:bg-primary-600 rounded-xl transition-colors"
                         >
                           <Twitter size={24} />
+                        </a>
+                      )}
+                      {siteConfig.social.facebook && (
+                        <a
+                          href={siteConfig.social.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Facebook"
+                          className="p-4 bg-dark-800 hover:bg-blue-600 rounded-xl transition-colors"
+                        >
+                          <FacebookIcon />
+                        </a>
+                      )}
+                      {siteConfig.social.instagram && (
+                        <a
+                          href={siteConfig.social.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Instagram"
+                          className="p-4 bg-dark-800 hover:bg-pink-600 rounded-xl transition-colors"
+                        >
+                          <InstagramIcon />
                         </a>
                       )}
                     </div>

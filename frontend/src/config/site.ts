@@ -20,6 +20,8 @@ interface SiteConfig {
     github: string
     linkedin: string
     twitter: string
+    facebook: string
+    instagram: string
   }
   api: {
     baseUrl: string
@@ -40,6 +42,8 @@ const siteConfig: SiteConfig = {
     github: import.meta.env.VITE_GITHUB_URL || '',
     linkedin: import.meta.env.VITE_LINKEDIN_URL || '',
     twitter: import.meta.env.VITE_TWITTER_URL || '',
+    facebook: import.meta.env.VITE_FACEBOOK_URL || '',
+    instagram: import.meta.env.VITE_INSTAGRAM_URL || '',
   },
   api: {
     // Usar la variable de entorno o значение por defecto correcto
