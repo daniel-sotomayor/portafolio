@@ -114,10 +114,15 @@ DATABASE_URL = (
 if DATABASE_URL:
     import dj_database_url
 
+    database_config = dj_database_url.parse(
+        DATABASE_URL, conn_max_age=0, conn_health_checks=True
+    )
+    database_options = database_config.setdefault('OPTIONS', {})
+    database_options.pop('supa', None)
+    database_options.pop('pgbouncer', None)
+
     DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL, conn_max_age=0, conn_health_checks=True
-        )
+        'default': database_config
     }
 else:
     DATABASES = {
