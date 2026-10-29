@@ -1,6 +1,6 @@
 # Despliegue en Vercel
 
-El repositorio está preparado para desplegar el frontend Vite y la API Django en un mismo proyecto de Vercel. La API y el panel de administración se ejecutan como una función Python; el frontend y los estáticos del admin se sirven desde la salida estática.
+El repositorio despliega el frontend Vite y el backend Django como servicios separados dentro de un proyecto Vercel. El frontend atiende la raíz y las rutas web; Django atiende la API, el panel y sus estáticos.
 
 ## Configuración del proyecto
 
@@ -17,6 +17,15 @@ El repositorio está preparado para desplegar el frontend Vite y la API Django e
 | `DJANGO_SUPERUSER_PASSWORD` | La contraseña solicitada, guardada como secreto en Vercel |
 
 No configures `VITE_API_URL` para este despliegue: el frontend llama a `/api` en el mismo dominio. `CORS_ALLOWED_ORIGINS` solo es necesario si el frontend y la API se sirven desde dominios distintos.
+
+## Servicios y rutas
+
+| Servicio | Framework | Rutas públicas |
+| --- | --- | --- |
+| `frontend` | Vite | `/` y el resto de rutas web |
+| `backend` | Django | `/api/*`, `/admin`, `/admin/*` y `/static/*` |
+
+No hay servicios internos ni bindings: las llamadas del frontend a Django se realizan desde el navegador al path público `/api` del mismo dominio.
 
 Genera la clave de Django localmente con `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"` y añádela directamente en Settings de Vercel, nunca al repositorio.
 
@@ -35,4 +44,4 @@ Los archivos subidos a `MEDIA_ROOT` tampoco persisten entre ejecuciones. Para co
 
 ## Comprobación
 
-Al desplegar, verifica la portada, una ruta interna del frontend, `/api/proyectos/` y `/admin/`. Vercel ejecuta `collectstatic` durante el build para incluir los estilos del panel de Django.
+Al desplegar, verifica la portada, una ruta interna del frontend, `/api/proyectos/` y `/admin/`. El servicio Django debe recopilar los estáticos del panel durante su build.
