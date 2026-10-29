@@ -11,7 +11,7 @@ El repositorio despliega el frontend Vite y el backend Django como servicios sep
 | --- | --- |
 | `SECRET_KEY` | Una clave Django aleatoria y privada |
 | `DEBUG` | `False` |
-| `DATABASE_URL` | URL de una base PostgreSQL persistente |
+| `DATABASE_URL` | URL de una base PostgreSQL persistente. Si usas la integración de Supabase, el backend también acepta `POSTGRES_URL_NON_POOLING` y `POSTGRES_URL` |
 | `ALLOWED_HOSTS` | `.vercel.app,tu-dominio.com` (añade el dominio propio si aplica) |
 | `DJANGO_SUPERUSER_USERNAME` | `DTSR_admin` (valor predeterminado) |
 | `DJANGO_SUPERUSER_PASSWORD` | La contraseña solicitada, guardada como secreto en Vercel |
@@ -31,7 +31,7 @@ Genera la clave de Django localmente con `python -c "from django.core.management
 
 ## Base de datos y archivos
 
-SQLite no es persistente en Vercel. Crea una base PostgreSQL administrada y configura su URL completa en `DATABASE_URL`. Antes de usar la API, ejecuta las migraciones contra esa base desde un entorno seguro con las mismas variables:
+SQLite no es persistente en Vercel. Crea una base PostgreSQL administrada y configura su URL completa en `DATABASE_URL` (preferida) o usa las variables que inyecta la integración de Supabase. Antes de usar la API, ejecuta las migraciones contra esa base desde un entorno seguro con las mismas variables:
 
 ```bash
 cd backend
