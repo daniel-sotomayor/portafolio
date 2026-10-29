@@ -10,15 +10,15 @@ djangorestframework-camel-case>=1.1,<2.0
 drf-yasg>=1.21,<2.0
 
 # Base de datos - SQLite para desarrollo (incluido en Python)
-# NOTA: Para producción con PostgreSQL, instala:
-# pip install psycopg2-binary
-# Y configura PostgreSQL en settings.py
+dj-database-url>=2.2,<3.0
+psycopg[binary]>=3.1,<4.0
 
 # Imágenes y media - Pillow 11.x tiene mejor soporte
 Pillow>=11.0,<12.0
 
 # Rich text editor
 django-ckeditor>=6.7,<7.0
+django-storages[s3]>=1.14,<2.0
 
 # Utils
 python-dotenv>=1.0,<2.0

@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+public/static
 *.tsbuildinfo
 # Environment variables - NO commit sensitive data
 .env
