@@ -1,17 +1,35 @@
 {
-  "version": 2,
-  "installCommand": "npm ci --prefix frontend && python -m pip install -r requirements.txt",
-  "buildCommand": "STATIC_ROOT=frontend/public/static python backend/manage.py collectstatic --noinput && npm --prefix frontend run build",
-  "outputDirectory": "frontend/dist",
-  "functions": {
-    "api/index.py": {
-      "includeFiles": "backend/**"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "backend": {
+      "root": "backend",
+      "framework": "django"
+    },
+    "frontend": {
+      "root": "frontend",
+      "framework": "vite"
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/admin", "destination": "/api/index.py" },
-    { "source": "/admin/(.*)", "destination": "/api/index.py" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/admin",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/static/(.*)",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/(.*)",
+      "destination": { "service": "frontend" }
+    }
   ]
 }
