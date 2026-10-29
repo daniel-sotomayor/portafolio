@@ -3,6 +3,7 @@ Django settings for portafolio project.
 """
 
 import os
+import sys
 from pathlib import Path
 from datetime import timedelta
 
@@ -11,7 +12,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 DEBUG = os.environ.get('DEBUG', 'False' if os.environ.get('VERCEL') else 'True') == 'True'
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-change-in-production')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+if not SECRET_KEY and DEBUG:
+    SECRET_KEY = 'django-insecure-development-key-change-in-production'
+elif not SECRET_KEY and sys.argv[1:2] == ['collectstatic']:
+    SECRET_KEY = 'build-only-static-collection-key'
+elif not SECRET_KEY:
+    from django.core.exceptions import ImproperlyConfigured
+
+    raise ImproperlyConfigured('Set a secure SECRET_KEY in the environment.')
 
 if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
     from django.core.exceptions import ImproperlyConfigured
