@@ -1,1 +1,28 @@
--r backend/requirements.txt
+# Django y REST Framework
+Django>=5.0,<6.0
+djangorestframework>=3.15,<4.0
+djangorestframework-simplejwt>=5.3,<6.0
+django-cors-headers>=4.3,<5.0
+django-filter>=24.0,<25.0
+djangorestframework-camel-case>=1.1,<2.0
+
+# Documentación API
+drf-yasg>=1.21,<2.0
+
+# Base de datos
+dj-database-url>=2.2,<3.0
+psycopg[binary]>=3.1,<4.0
+
+# Imágenes y media
+Pillow>=11.0,<12.0
+django-ckeditor>=6.7,<7.0
+django-storages[s3]>=1.14,<2.0
+
+# Utilidades
+python-dotenv>=1.0,<2.0
+gunicorn>=22.0,<23.0
+whitenoise>=6.6,<7.0
+
+# Desarrollo y testing
+pytest>=8.0,<9.0
+pytest-django>=4.8,<5.0
