@@ -40,7 +40,7 @@ python manage.py migrate
 
 Después de aplicar las migraciones, la primera petición a Django crea el superusuario configurado en `DJANGO_SUPERUSER_USERNAME` y `DJANGO_SUPERUSER_PASSWORD`, si todavía no existe. La contraseña se guarda con hash y solo se usa al crear la cuenta. Configura ambas variables en Vercel antes de la primera petición; no las añadas a archivos del repositorio.
 
-Los archivos subidos a `MEDIA_ROOT` tampoco persisten entre ejecuciones. Para conservar imágenes del blog o proyectos, configura un bucket S3 y estas variables en Vercel: `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_REGION_NAME`, `AWS_ACCESS_KEY_ID` y `AWS_SECRET_ACCESS_KEY`. No guardes credenciales ni medios en Git. Sin bucket configurado, el backend usa el almacenamiento local, que no es persistente en Vercel.
+Los archivos subidos a `MEDIA_ROOT` tampoco persisten entre ejecuciones. Para imágenes del blog o proyectos en Vercel, crea un bucket en Supabase Storage y genera credenciales S3 en la configuración S3 de Storage. Configura en Vercel `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_ENDPOINT_URL` (`https://<project-ref>.supabase.co/storage/v1/s3`), `AWS_S3_REGION_NAME` y las credenciales `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` generadas para S3. No uses `SUPABASE_SERVICE_ROLE_KEY` como credencial S3. No guardes credenciales ni medios en Git. Sin este bucket configurado, Django usa almacenamiento local, que no es persistente en Vercel.
 
 ## Comprobación
 

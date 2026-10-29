@@ -186,7 +186,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-if AWS_STORAGE_BUCKET_NAME:
+S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL')
+if AWS_STORAGE_BUCKET_NAME and S3_ENDPOINT_URL:
     STORAGES = {
         'default': {
             'BACKEND': 'storages.backends.s3.S3Storage',
@@ -196,6 +197,9 @@ if AWS_STORAGE_BUCKET_NAME:
         },
     }
     AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
+    AWS_S3_ENDPOINT_URL = S3_ENDPOINT_URL
+    AWS_S3_ADDRESSING_STYLE = 'path'
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
     AWS_QUERYSTRING_AUTH = os.environ.get('AWS_QUERYSTRING_AUTH', 'True') == 'True'
     AWS_DEFAULT_ACL = None
     AWS_S3_FILE_OVERWRITE = False
